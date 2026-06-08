@@ -12,9 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Local large media
-public/videos/starleap-quiz.gif
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
