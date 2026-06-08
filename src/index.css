@@ -1,0 +1,37 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --nav-height: 68px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
+
+body{
+  min-height: 100vh;
+  background: linear-gradient(120deg, #feecf7, #effafd);
+  color: #7a646f;
+  font-family: "poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: #7a646f;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-item {
+  align-self: center;
+}

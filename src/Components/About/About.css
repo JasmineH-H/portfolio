@@ -1,0 +1,40 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - var(--nav-height));
+  margin: 0 clamp(28px, 9vw, 170px);
+  padding: 50px 0;
+  gap: 30px;
+  scroll-snap-align: start;
+  scroll-margin-top: var(--nav-height);
+}
+
+.about-title {
+  position: relative;
+}
+
+.about-title h1 {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.about-title img{
+  width: 80%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+@media (max-width: 560px) {
+  .about {
+    padding: 58px 0;
+  }
+
+  .about-title h1 {
+    font-size: 40px;
+  }
+}
