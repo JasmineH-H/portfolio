@@ -3,8 +3,10 @@ import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import Hero from "./Components/Hero/Hero";
 import About from "./Components/About/About";
+import Contact from "./Components/Contact/Contact";
 import Projects from "./Components/Projects/Projects";
 import ProjectDetail from "./Components/Projects/ProjectDetail";
+import Resume from "./Components/Resume/Resume";
 
 const getRoute = (pathname) => {
   const [, page, slug] = pathname.split("/");
@@ -38,6 +40,11 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const navigateToResume = () => {
+    updateRoute("/resume");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const openProject = (slug) => {
     updateRoute(`/projects/${slug}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -61,11 +68,21 @@ function App() {
     );
   }
 
+  if (route.page === "resume") {
+    return (
+      <div>
+        <Navbar />
+        <Resume />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Navbar />
-      <Hero onNavigateProjects={navigateToProjects} />
+      <Hero onNavigateProjects={navigateToProjects} onNavigateResume={navigateToResume} />
       <About />
+      <Contact />
     </div>
   );
 }

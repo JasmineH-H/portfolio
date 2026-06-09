@@ -2,7 +2,7 @@ import React from "react";
 import "./Hero.css";
 import profile_img from "../../assets/profile_img3.png";
 
-const Hero = ({ onNavigateProjects }) => {
+const Hero = ({ onNavigateProjects, onNavigateResume }) => {
   return (
     <div className="hero">
       <div className="hero-img-frame">
@@ -14,7 +14,9 @@ const Hero = ({ onNavigateProjects }) => {
         <button className="hero-connect" onClick={onNavigateProjects} type="button">
           Explore My Work
         </button>
-        <div className="hero-resume">View Resume</div>
+        <button className="hero-resume" onClick={onNavigateResume} type="button">
+          View Resume
+        </button>
       </div>
     </div>
   );

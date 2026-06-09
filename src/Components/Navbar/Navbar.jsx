@@ -5,17 +5,15 @@ import { NAV_LIST_ENUMS } from "../constants";
 
 const Navbar = () => {
   const handleNavigation = (event, link) => {
-    if (link === "/resume") {
-      return;
-    }
-
     event.preventDefault();
     window.history.pushState(null, "", link);
     window.dispatchEvent(new PopStateEvent("popstate"));
 
     if (link.includes("#")) {
       const id = link.split("#")[1];
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      window.setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -35,7 +33,13 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <a className="nav-connect" href="mailto:jasmine@example.com">Contact Me</a>
+      <a
+        className="nav-connect"
+        href="/#contact"
+        onClick={(event) => handleNavigation(event, "/#contact")}
+      >
+        Contact Me
+      </a>
     </div>
   )
 }
