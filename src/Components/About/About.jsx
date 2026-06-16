@@ -1,4 +1,3 @@
-import React from 'react'
 import './About.css';
 import text_decor from "../../assets/title_decor.png";
 import AboutTab from './AboutTab';

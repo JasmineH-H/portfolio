@@ -171,15 +171,45 @@ const ProjectDetail = ({ slug, onBack }) => {
                 {item.steps && (
                   <div className="function-timeline">
                     {item.steps.map((step, index) => (
-                      <article className="timeline-step" key={step.title}>
+                      <article
+                        className={`timeline-step ${
+                          step.layout === "stacked" ||
+                          item.timelineLayout === "stacked" ||
+                          project.timelineLayout === "stacked"
+                            ? "timeline-step-stacked"
+                            : ""
+                        }`}
+                        key={step.title}
+                      >
                         <div className="timeline-copy">
                           <span>{String(index + 1).padStart(2, "0")}</span>
                           <h4>{step.title}</h4>
                           <p>{step.text}</p>
+                          {step.notebook && (
+                            <a
+                              className="timeline-source-link"
+                              href={step.notebook.url}
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              Source notebook: {step.notebook.name}
+                            </a>
+                          )}
                         </div>
-                        <figure>
-                          <img src={step.image} alt={step.imageAlt} />
-                        </figure>
+                        {step.images ? (
+                          <div className="timeline-figures">
+                            {step.images.map((image) => (
+                              <figure key={image.imageAlt}>
+                                <img src={image.image} alt={image.imageAlt} />
+                                {image.caption && <figcaption>{image.caption}</figcaption>}
+                              </figure>
+                            ))}
+                          </div>
+                        ) : step.image ? (
+                          <figure>
+                            <img src={step.image} alt={step.imageAlt} />
+                          </figure>
+                        ) : null}
                       </article>
                     ))}
                   </div>

@@ -1,5 +1,8 @@
 import cloudDevsecopsArchitecture from "../../assets/cloud-devsecops-architecture.png";
 import cloudDevsecopsNetworkSecurity from "../../assets/cloud-devsecops-network-security.png";
+import devsecopsPentestControls from "../../assets/devsecops-pentest-controls.png";
+import devsecopsPentestHistory from "../../assets/devsecops-pentest-history.png";
+import devsecopsPentestLambdaTrigger from "../../assets/devsecops-pentest-lambda-trigger.png";
 import sastBackendIngest from "../../assets/sast-backend-ingest.png";
 import sastPolicyEnforcement from "../../assets/sast-policy-enforcement.png";
 import sastS3Upload from "../../assets/sast-s3-upload.png";
@@ -16,6 +19,30 @@ import starleapCrystal from "../../assets/starleap-crystal.png";
 import starleapLoginBackground from "../../assets/starleap-login-background.png";
 import starleapReturnButton from "../../assets/starleap-return-button.png";
 import starleapShopBox from "../../assets/starleap-shop-box.png";
+import vadBaselineCleanConfusionMatrix from "../../assets/vad-baseline-clean-confusion-matrix.png";
+import vadBaselineCleanThreshold from "../../assets/vad-baseline-clean-threshold.png";
+import vadBaselineNoisyConfusionMatrix from "../../assets/vad-baseline-noisy-confusion-matrix.png";
+import vadBaselineNoisyRoc from "../../assets/vad-baseline-noisy-roc.png";
+import vadCleanLibriSpeechLabels from "../../assets/vad-clean-librispeech-labels.png";
+import vadFeatureEnergyLabels from "../../assets/vad-feature-energy-labels.png";
+import vadLazyCrnnConfusionMatrix from "../../assets/vad-lazy-crnn-confusion-matrix.png";
+import vadLazyCrnnThreshold from "../../assets/vad-lazy-crnn-threshold.png";
+import vadLazyNoisyMlpConfusionMatrix from "../../assets/vad-lazy-noisy-mlp-confusion-matrix.png";
+import vadLazyMlpCrnnPipeline from "../../assets/vad-lazy-mlp-crnn-pipeline.png";
+import vadLazyNoisyMlpThreshold from "../../assets/vad-lazy-noisy-mlp-threshold.png";
+import vadLogMelSpectrogram from "../../assets/vad-log-mel-spectrogram.png";
+import vadMlpTrainingPipeline from "../../assets/vad-mlp-training-pipeline.png";
+import vadNoiseLabelPreservation from "../../assets/vad-noise-label-preservation.png";
+import vadNoisyMlpConfusionMatrix from "../../assets/vad-noisy-mlp-confusion-matrix.png";
+import vadNoisyMlpThreshold from "../../assets/vad-noisy-mlp-threshold.png";
+import vadSnrBucketCounts from "../../assets/vad-snr-bucket-counts.png";
+import vadTestNoisyF1ByNoiseType from "../../assets/vad-test-noisy-f1-by-noise-type.png";
+import vadTestNoisyF1BySnr from "../../assets/vad-test-noisy-f1-by-snr.png";
+import vadTestNoisyFarByNoiseType from "../../assets/vad-test-noisy-far-by-noise-type.png";
+import vadTestNoisyFarBySnr from "../../assets/vad-test-noisy-far-by-snr.png";
+import vadTestNoisyMrByNoiseType from "../../assets/vad-test-noisy-mr-by-noise-type.png";
+import vadTestNoisyMrBySnr from "../../assets/vad-test-noisy-mr-by-snr.png";
+import vadTestNoisyModelLeaderboard from "../../assets/vad-test-noisy-model-leaderboard.png";
 
 export const PROJECT_TAGS = [
   "All",
@@ -23,6 +50,7 @@ export const PROJECT_TAGS = [
   "Backend",
   "UX/UI",
   "DevOps",
+  "Machine Learning",
   "Marketing",
 ];
 
@@ -83,18 +111,21 @@ export const projects = [
             text: "The scanner sends the SAST result payload to the backend API, which confirms a successful ingest response.",
             image: sastBackendIngest,
             imageAlt: "GitHub Actions log showing SAST results sent to the backend API",
+            layout: "stacked",
           },
           {
             title: "Report storage",
             text: "The generated SAST report is compressed and uploaded to the S3 report bucket while scan metadata is prepared for storage.",
             image: sastS3Upload,
             imageAlt: "GitHub Actions log showing SAST report upload to S3",
+            layout: "stacked",
           },
           {
             title: "Merge protection",
             text: "If high or medium vulnerabilities are found, the SAST policy step fails and blocks the merge.",
             image: sastPolicyEnforcement,
             imageAlt: "GitHub Actions log showing SAST policy enforcement failure",
+            layout: "stacked",
           },
         ],
       },
@@ -102,6 +133,29 @@ export const projects = [
         title: "Scheduled API Penetration Testing",
         description:
           "A Lambda integration triggers containerized pentest workers on a schedule. The workers run API security checks, collect results, and send findings back through the same ingestion flow used by repository scans.",
+        steps: [
+          {
+            title: "Configure pentest schedule",
+            text: "The dashboard lets a user set the target API URL, associate the run with a repository label, run an immediate pentest, or save a recurring schedule such as every 5 minutes, hourly, daily, or weekdays.",
+            image: devsecopsPentestControls,
+            imageAlt:
+              "Pentest controls showing target URL, repository label, run-now action, and recurring schedule options",
+          },
+          {
+            title: "Trigger scheduled Lambda",
+            text: "The saved schedule is represented in AWS as EventBridge rules connected to the devsecops-advisor-pentest-trigger Lambda function. This keeps recurring API pentests serverless and event-driven.",
+            image: devsecopsPentestLambdaTrigger,
+            imageAlt:
+              "AWS Lambda function overview showing EventBridge CloudWatch Events triggers for the pentest trigger function",
+          },
+          {
+            title: "Review scheduled pentest results",
+            text: "Completed pentest runs appear in scan history with timestamps, status, risk score, and a view action. The repeated five-minute entries show the recurring schedule producing persisted pentest results.",
+            image: devsecopsPentestHistory,
+            imageAlt:
+              "Scan history filtered to pentest results showing repeated completed scheduled pentest runs with risk scores",
+          },
+        ],
       },
       {
         title: "Backend Findings API",
@@ -246,6 +300,336 @@ export const projects = [
         title: "Relational Database Design",
         description:
           "The project uses a normalized MySQL database with tables for movies, members, comments, genres, preferences, watchlists, casts, and movie-cast relationships. SQL joins connect movie data with genres, casts, comments, and user-specific features.",
+      },
+    ],
+  },
+  {
+    slug: "noise-robust-voice-activity-detection",
+    title: "Noise-Robust Voice Activity Detection",
+    area: "Machine Learning / Audio Processing",
+    tags: ["Machine Learning", "Backend"],
+    summary:
+      "A voice activity detection pipeline that trains and compares clean, noisy, and lazy-feature neural models for robust speech detection.",
+    repository:
+      "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL",
+    techStack: [
+      {
+        category: "Python & ML",
+        tools: ["Python", "PyTorch", "torchaudio", "NumPy", "SciPy"],
+      },
+      {
+        category: "Audio Processing",
+        tools: ["librosa", "soundfile", "audioread", "WebRTC VAD"],
+      },
+      {
+        category: "Datasets & Files",
+        tools: ["LibriSpeech", "MUSAN", "JSONL", "WAV"],
+      },
+      {
+        category: "Environment & Analysis",
+        tools: ["Docker", "Jupyter Notebook", "Bash", "Matplotlib", "tqdm"],
+      },
+    ],
+    introduction:
+      "This project builds a noise-robust voice activity detection system for identifying speech frames under clean and noisy audio conditions. The pipeline prepares LibriSpeech and MUSAN data, generates noisy mixtures, extracts acoustic features, and trains multiple neural architectures to compare robustness strategies.",
+    functions: [
+      {
+        title: "Dataset Preparation and Indexing",
+        description:
+          "The dataset pipeline prepares clean LibriSpeech speech clips, samples MUSAN background audio at different SNR levels, and keeps the original frame-level VAD labels aligned after noise mixing.",
+        steps: [
+          {
+            title: "Prepare clean LibriSpeech audio and labels",
+            text: "Clean LibriSpeech utterances are segmented into frame-level speech and non-speech regions, then indexed so each waveform has matching VAD labels before any augmentation is applied.",
+            image: vadCleanLibriSpeechLabels,
+            imageAlt:
+              "Clean LibriSpeech waveform with highlighted speech frames used as voice activity labels",
+            notebook: {
+              name: "02_Generation_Sanity_Check.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/02_Generation_Sanity_Check.ipynb",
+            },
+          },
+          {
+            title: "Add MUSAN noise at different SNR levels",
+            text: "MUSAN noise clips are sampled and mixed into clean speech at target SNR buckets, giving the training set examples that range from very noisy to cleaner audio conditions.",
+            image: vadSnrBucketCounts,
+            imageAlt:
+              "Notebook chart showing target SNR bucket counts used for noisy audio generation",
+            notebook: {
+              name: "03_Add_Noise_Sanity_Check.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/03_Add_Noise_Sanity_Check.ipynb",
+            },
+          },
+          {
+            title: "Preserve labels after noise mixing",
+            text: "After background noise is added, the speech and non-speech intervals are kept from the clean source waveform, so the noisy example uses the same aligned VAD targets.",
+            image: vadNoiseLabelPreservation,
+            imageAlt:
+              "Waveform comparison before and after adding noise showing speech and non-speech labels preserved across the clean and noisy audio",
+            notebook: {
+              name: "03_Add_Noise_Sanity_Check.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/03_Add_Noise_Sanity_Check.ipynb",
+            },
+          },
+        ],
+      },
+      {
+        title: "Feature Extraction",
+        description:
+          "The feature pipeline converts each waveform into frame-level acoustic representations that the neural models can learn from. Log-mel spectrograms capture the speech signal across time and frequency, while energy-based checks help confirm that feature activity still matches the VAD labels.",
+        steps: [
+          {
+            title: "Convert waveforms into log-mel spectrograms",
+            text: "Each audio clip is transformed from a raw waveform into a log-mel spectrogram, which compresses frequency information into perceptually meaningful bands over time. This gives the model a structured view of speech patterns instead of raw amplitude samples.",
+            image: vadLogMelSpectrogram,
+            imageAlt:
+              "Log-mel spectrogram generated from a LibriSpeech training waveform",
+            notebook: {
+              name: "02_Generation_Sanity_Check.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/02_Generation_Sanity_Check.ipynb",
+            },
+          },
+          {
+            title: "Validate feature energy against VAD labels",
+            text: "After feature extraction, the notebook compares frame-level feature energy with the scaled speech labels. This sanity check helps confirm that high-energy regions generally line up with speech intervals and that the labels remain usable after preprocessing.",
+            image: vadFeatureEnergyLabels,
+            imageAlt:
+              "Notebook plot showing feature energy aligned with scaled voice activity labels across three training audio samples",
+            notebook: {
+              name: "04_Feature_Sanity_Check.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/04_Feature_Sanity_Check.ipynb",
+            },
+          },
+        ],
+      },
+      {
+        title: "Baseline and Noisy MLP Training",
+        description:
+          "A baseline MLP is trained on clean speech features, then an offline noisy MLP is trained on noisy examples using the same frame-level binary classification target for a fair robustness comparison.",
+        timelineLayout: "stacked",
+        steps: [
+          {
+            title: "MLP training and evaluation pipeline",
+            text: "This pipeline diagram shows how the baseline and noisy MLP experiments move from audio input to frame-level VAD decisions. Clean or noisy audio is preprocessed, converted into log-mel, delta, delta-delta, and log-energy features, then context-stacked into a 1331-dimensional input vector. The MLP outputs one speech probability per frame, applies an F1-tuned threshold, converts probabilities into speech or non-speech labels, and evaluates the results with F1, false alarm rate, miss rate, and SNR-bucket metrics.",
+            image: vadMlpTrainingPipeline,
+            imageAlt:
+              "Pipeline diagram for baseline and noisy MLP voice activity detection training and evaluation",
+            layout: "stacked",
+          },
+          {
+            title: "Validate the clean baseline MLP",
+            text: "The clean baseline achieved strong performance, with the confusion matrix showing very few classification errors. Only 742 false positives and 3,947 false negatives were observed, compared with hundreds of thousands of correctly classified frames. The F1-score analysis indicates that a decision threshold of approximately 0.30 provides the best balance between precision and recall for the clean baseline model.",
+            images: [
+              {
+                image: vadBaselineCleanConfusionMatrix,
+                imageAlt:
+                  "Notebook 05 confusion matrix for the clean baseline MLP",
+                caption: "Confusion matrix",
+              },
+              {
+                image: vadBaselineCleanThreshold,
+                imageAlt:
+                  "Notebook 05 F1 threshold tuning curve for the clean baseline MLP",
+                caption: "F1 versus threshold",
+              },
+            ],
+            notebook: {
+              name: "05_Baseline_MLP_Validation_clean.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/05_Baseline_MLP_Validation_clean.ipynb",
+            },
+          },
+          {
+            title: "Test the clean baseline under noisy conditions",
+            text: "Evaluation on noisy development data revealed a significant performance degradation for the clean-trained baseline. Although speech detection remained relatively strong, the model produced 258,936 false positives, suggesting poor robustness to background noise. This was further reflected in the ROC AUC of 0.6590, indicating reduced separability between speech and non-speech frames under noisy conditions.",
+            images: [
+              {
+                image: vadBaselineNoisyConfusionMatrix,
+                imageAlt:
+                  "Notebook 05 confusion matrix for the clean baseline MLP evaluated on noisy dev data",
+                caption: "Noisy-dev confusion matrix",
+              },
+              {
+                image: vadBaselineNoisyRoc,
+                imageAlt:
+                  "Notebook 05 ROC curve for the clean baseline MLP evaluated on noisy dev data with AUC 0.6590",
+                caption: "Noisy-dev ROC curve",
+              },
+            ],
+            notebook: {
+              name: "05_Baseline_MLP_Validation_noisy.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/05_Baseline_MLP_Validation_noisy.ipynb",
+            },
+          },
+          {
+            title: "Train and validate the noisy MLP",
+            text: "An offline MLP was trained directly on noisy speech features and tuned using noisy development data. The confusion matrix shows a substantial reduction in false positives compared with the clean baseline, decreasing from 258,936 to 117,807. This indicates that noise-aware training improves the model's ability to distinguish noisy non-speech frames from speech. Analysis of F1 scores across decision thresholds shows that performance peaks at approximately 0.45, providing the best balance between precision and recall for the noisy MLP.",
+            images: [
+              {
+                image: vadNoisyMlpConfusionMatrix,
+                imageAlt:
+                  "Notebook 06 confusion matrix for the noisy offline MLP evaluated on noisy dev data",
+                caption: "Noisy MLP confusion matrix",
+              },
+              {
+                image: vadNoisyMlpThreshold,
+                imageAlt:
+                  "Notebook 06 threshold tuning curve for the noisy offline MLP with best threshold 0.45",
+                caption: "Noisy MLP threshold tuning",
+              },
+            ],
+            notebook: {
+              name: "06_Noisy_MLP_Validation.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/06_Noisy_MLP_Validation.ipynb",
+            },
+          },
+        ],
+      },
+      {
+        title: "Lazy Feature MLP and CRNN Training",
+        description:
+          "The lazy-feature stage tests and validates two noisy-feature models without relying only on precomputed frame files. The lazy MLP uses context-stacked frame samples from lazy noisy data, while the CRNN validates full lazy noisy sequences with convolutional and recurrent layers.",
+        timelineLayout: "stacked",
+        steps: [
+          {
+            title: "Lazy MLP and CRNN feature pipeline",
+            text: "This pipeline diagram shows how augmented noisy audio is converted into on-the-fly frame features for both lazy models. The MLP path context-stacks frames before classification, while the CRNN path keeps full feature sequences for temporal convolution and recurrent modeling. Both paths then produce frame-level speech probabilities, apply post-processing thresholds, and evaluate final VAD decisions across noisy SNR conditions.",
+            image: vadLazyMlpCrnnPipeline,
+            imageAlt:
+              "Pipeline diagram showing lazy noisy feature extraction feeding separate MLP and CRNN voice activity detection paths",
+          },
+          {
+            title: "Test and validate the lazy noisy MLP",
+            text: "Twelve lazy noisy MLP checkpoints were evaluated on 500 noisy development clips, covering 1,088,453 frame-level samples. The best-performing model, lazy_mlp_lr0.001_wd1e-5_dr0.0_seed42, achieved an F1 score of 0.8694, with 0.8288 precision and 0.9141 recall. Threshold tuning identified 0.45 as the optimal operating point, providing the best balance between precision and recall. The confusion matrix further illustrates the remaining trade-off between missed speech frames and false alarms caused by background noise.",
+            images: [
+              {
+                image: vadLazyNoisyMlpConfusionMatrix,
+                imageAlt:
+                  "Notebook 07 confusion matrix for the best lazy noisy MLP checkpoint on dev-noisy features",
+                caption: "Confusion matrix",
+              },
+              {
+                image: vadLazyNoisyMlpThreshold,
+                imageAlt:
+                  "Notebook 07 threshold tuning curve for the lazy noisy MLP with best threshold 0.45",
+                caption: "Threshold tuning",
+              },
+            ],
+            notebook: {
+              name: "07_Lazy_Noisy_MLP_Validation.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/07_Lazy_Noisy_MLP_Validation.ipynb",
+            },
+          },
+          {
+            title: "Test and validate the lazy noisy CRNN",
+            text: "Eight lazy CRNN checkpoints were evaluated on 500 noisy development clips. The best-performing model, lazy_crnn_lr0.001_wd1e-5_dr0.1_seed42, achieved an F1 score of 0.9113, with 0.8943 precision and 0.9290 recall. Threshold tuning identified 0.65 as the optimal operating point, providing the best balance between precision and recall. The confusion matrix indicates that the CRNN produces fewer false alarms on noisy non-speech frames than the lazy MLP while maintaining strong speech detection performance.",
+            images: [
+              {
+                image: vadLazyCrnnConfusionMatrix,
+                imageAlt:
+                  "Notebook 08 confusion matrix for the best lazy CRNN checkpoint on dev-noisy feature sequences",
+                caption: "Confusion matrix",
+              },
+              {
+                image: vadLazyCrnnThreshold,
+                imageAlt:
+                  "Notebook 08 threshold tuning curve for the lazy CRNN with best threshold 0.65",
+                caption: "Threshold tuning",
+              },
+            ],
+            notebook: {
+              name: "08_CRNN_Validation.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/08_CRNN_Validation.ipynb",
+            },
+          },
+        ],
+      },
+      {
+        title: "Final Test Results",
+        description:
+          "The final notebook compares all tuned models on the held-out noisy test set, including SNR and noise-type breakdowns, to identify the strongest production candidate.",
+        timelineLayout: "stacked",
+        steps: [
+          {
+            title: "Compare tuned models on noisy test audio",
+            text: "Notebook 09 evaluates five tuned VAD models on 500 noisy test clips with 1,086,683 frame-level samples. The lazy CRNN is the best overall model, reaching F1 0.9173, accuracy 0.8829, precision 0.8962, and recall 0.9395. Compared with the strongest noisy MLP baseline at F1 0.8815, the CRNN improves final test robustness while reducing false alarms to 0.2439.",
+            image: vadTestNoisyModelLeaderboard,
+            imageAlt:
+              "Notebook 09 final noisy test leaderboard comparing F1, precision, recall, false alarm rate, and miss rate across tuned VAD models",
+            notebook: {
+              name: "09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+            },
+          },
+          {
+            title: "F1, FAR, and MR per SNR bucket for each model",
+            text: "The SNR breakdown shows how the tuned models behave from -5 dB to 20 dB. The lazy CRNN keeps the highest F1 at every SNR bucket, rising from 0.8859 at -5 dB to 0.9445 at 20 dB. It also has the lowest false alarm rate across SNR buckets, while miss rate stays low enough to preserve strong speech recall under heavy noise.",
+            images: [
+              {
+                image: vadTestNoisyF1BySnr,
+                imageAlt:
+                  "Notebook 09 F1 by SNR bucket chart comparing tuned models from -5 to 20 dB",
+                caption: "F1 by SNR bucket",
+              },
+              {
+                image: vadTestNoisyFarBySnr,
+                imageAlt:
+                  "Notebook 09 false alarm rate by SNR bucket chart comparing tuned models from -5 to 20 dB",
+                caption: "FAR by SNR bucket",
+              },
+              {
+                image: vadTestNoisyMrBySnr,
+                imageAlt:
+                  "Notebook 09 miss rate by SNR bucket chart comparing tuned models from -5 to 20 dB",
+                caption: "MR by SNR bucket",
+              },
+            ],
+            notebook: {
+              name: "09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+            },
+          },
+          {
+            title: "F1, FAR, and MR per noise type for each model",
+            text: "The noise-type breakdown compares babble, music, and generic noise. The lazy CRNN is strongest overall on music and generic noise, with F1 0.9004 on music and 0.9259 on noise, and it keeps false alarms far below the clean-trained baselines. Babble remains highly competitive across models, but the CRNN provides the most balanced final-test behavior across all noise types.",
+            images: [
+              {
+                image: vadTestNoisyF1ByNoiseType,
+                imageAlt:
+                  "Notebook 09 F1 by noise type chart comparing tuned models on babble, music, and noise",
+                caption: "F1 by noise type",
+              },
+              {
+                image: vadTestNoisyFarByNoiseType,
+                imageAlt:
+                  "Notebook 09 false alarm rate by noise type chart comparing tuned models on babble, music, and noise",
+                caption: "FAR by noise type",
+              },
+              {
+                image: vadTestNoisyMrByNoiseType,
+                imageAlt:
+                  "Notebook 09 miss rate by noise type chart comparing tuned models on babble, music, and noise",
+                caption: "MR by noise type",
+              },
+            ],
+            notebook: {
+              name: "09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+            },
+          },
+          {
+            title: "Final conclusion",
+            text: "The final noisy-test comparison shows that the lazy CRNN is the strongest model for robust voice activity detection. It delivers the best overall F1 score, keeps false alarms lower than the MLP-based approaches, and remains consistently strong across SNR buckets and noise types. The results support using sequence-aware lazy feature modeling as the final model because it preserves speech recall while handling realistic background noise more reliably.",
+            notebook: {
+              name: "09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+              url: "https://github.com/SharonHuang77/Noise-Robust-Voice-Activity-Detection-FINAL/blob/main/notebooks/09_Test_Noisy_Model_Comparison_By_SNR_NoiseType.ipynb",
+            },
+          },
+        ],
+      },
+      {
+        title: "Reproducible Experiment Workflow",
+        description:
+          "Docker, shell scripts, configurable environment variables, checkpoints, and sweep options make it possible to rerun data generation, feature extraction, model training, and hyperparameter experiments consistently.",
       },
     ],
   },

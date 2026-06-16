@@ -1,6 +1,5 @@
-import React from "react";
 import "./Hero.css";
-import profile_img from "../../assets/profile_img3.png";
+import profile_img from "../../assets/profile_img.png";
 
 const Hero = ({ onNavigateProjects, onNavigateResume }) => {
   return (
