@@ -197,16 +197,29 @@ const ProjectDetail = ({ slug, onBack }) => {
                           )}
                         </div>
                         {step.images ? (
-                          <div className="timeline-figures">
+                          <div
+                            className={`timeline-figures ${
+                              step.imagesLayout === "vertical"
+                                ? "timeline-figures-vertical"
+                                : ""
+                            }`}
+                          >
                             {step.images.map((image) => (
-                              <figure key={image.imageAlt}>
+                              <figure
+                                className={
+                                  image.size === "compact"
+                                    ? "timeline-figure-compact"
+                                    : ""
+                                }
+                                key={image.imageAlt}
+                              >
                                 <img src={image.image} alt={image.imageAlt} />
                                 {image.caption && <figcaption>{image.caption}</figcaption>}
                               </figure>
                             ))}
                           </div>
                         ) : step.image ? (
-                          <figure>
+                          <figure className={step.imageSize === "compact" ? "timeline-figure-compact" : ""}>
                             <img src={step.image} alt={step.imageAlt} />
                           </figure>
                         ) : null}

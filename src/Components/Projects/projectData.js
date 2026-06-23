@@ -1,8 +1,21 @@
 import cloudDevsecopsArchitecture from "../../assets/cloud-devsecops-architecture.png";
 import cloudDevsecopsNetworkSecurity from "../../assets/cloud-devsecops-network-security.png";
+import devsecopsDashboardOverview from "../../assets/devsecops-dashboard-overview.png";
+import devsecopsDashboardRiskScore from "../../assets/devsecops-dashboard-risk-score.png";
+import devsecopsDashboardScanDetailsReport from "../../assets/devsecops-dashboard-scan-details-report.png";
+import devsecopsDashboardScanDetailsSummary from "../../assets/devsecops-dashboard-scan-details-summary.png";
 import devsecopsPentestControls from "../../assets/devsecops-pentest-controls.png";
 import devsecopsPentestHistory from "../../assets/devsecops-pentest-history.png";
 import devsecopsPentestLambdaTrigger from "../../assets/devsecops-pentest-lambda-trigger.png";
+import devsecopsRiskPentestFindingsTable from "../../assets/devsecops-risk-pentest-findings-table.png";
+import devsecopsRiskPentestScore from "../../assets/devsecops-risk-pentest-score.png";
+import devsecopsRiskSastFindingsTable from "../../assets/devsecops-risk-sast-findings-table.png";
+import devsecopsRiskSastScore from "../../assets/devsecops-risk-sast-score.png";
+import devsecopsScriptDeployCommands from "../../assets/devsecops-script-deploy-commands.png";
+import devsecopsScriptDeployOutputUrls from "../../assets/devsecops-script-deploy-output-urls.png";
+import devsecopsScriptDeploySummary from "../../assets/devsecops-script-deploy-summary.png";
+import devsecopsScriptSetupSecrets from "../../assets/devsecops-script-setup-secrets.png";
+import devsecopsScriptTargetRepo from "../../assets/devsecops-script-target-repo.png";
 import sastBackendIngest from "../../assets/sast-backend-ingest.png";
 import sastPolicyEnforcement from "../../assets/sast-policy-enforcement.png";
 import sastS3Upload from "../../assets/sast-s3-upload.png";
@@ -158,24 +171,142 @@ export const projects = [
         ],
       },
       {
-        title: "Backend Findings API",
+        title: "Security Dashboard",
         description:
-          "The Node.js and Express API provides endpoints for ingesting scan results and querying historical findings. It coordinates scan metadata, report artifacts, risk scoring, and dashboard data retrieval.",
+          "The React dashboard turns backend scan data into an operational security workspace. Axios requests scan history, findings, controls, and risk posture from the Express API, then the UI organizes the results so teams can move from overview to action quickly.",
+        steps: [
+          {
+            title: "Overall project dashboard",
+            text: "The main dashboard starts by loading a selected owner, repository, and target URL, then shows the active project context for the security workspace. The sidebar summarizes the major areas: total risk score, SAST result, pentest controls, and scan history, giving teams one place to orient before drilling into findings.",
+            image: devsecopsDashboardOverview,
+            imageAlt:
+              "Cloud DevSecOps Security Advisor dashboard showing project selection, current project details, and navigation for risk score, SAST result, and pentest controls",
+          },
+          {
+            title: "Compare overall, SAST, and pentest risk",
+            text: "The risk score view separates the combined project risk from the latest SAST and pentest scores. In this run, the dashboard shows an overall score of 90, a SAST score of 100, and a pentest score of 83, making it clear which security signal is driving the project risk higher.",
+            image: devsecopsDashboardRiskScore,
+            imageAlt:
+              "Security dashboard total risk score cards showing overall risk score, latest SAST score, and latest pentest score",
+            layout: "stacked",
+          },
+          {
+            title: "Track scan history and risk posture",
+            text: "The scan history view combines SAST and pentest runs in one table with timestamp, scan type, status, risk score, and a drill-down action. Filtering the history helps teams separate repository scans from scheduled API pentests and spot repeated high-risk runs.",
+            image: devsecopsPentestHistory,
+            imageAlt:
+              "Security dashboard scan history showing completed pentest runs with timestamps, status, risk score, and view actions",
+            imageSize: "compact",
+          },
+          {
+            title: "Review findings from one place",
+            text: "Clicking the View button opens a scan details modal with the run ID, repository, scan type, status, branch, timestamp, and commit SHA. The same modal continues into the risk assessment and report section, where users can see the normalized risk score, raw score, total findings, scanner tool, report format, and S3 report path for the compressed detailed report.",
+            layout: "stacked",
+            imagesLayout: "stacked",
+            images: [
+              {
+                image: devsecopsDashboardScanDetailsSummary,
+                imageAlt:
+                  "Security dashboard scan details modal showing SAST run information including repository, status, branch, timestamp, and commit SHA",
+              },
+              {
+                image: devsecopsDashboardScanDetailsReport,
+                imageAlt:
+                  "Security dashboard scan details modal showing risk score, total findings, scanner tool, report format, and raw S3 report path",
+              },
+            ],
+          },
+        ],
       },
       {
         title: "Risk Scoring and Aggregation",
         description:
           "Security findings are grouped by scan, severity, and control area so the dashboard can show both individual vulnerabilities and broader risk trends over time.",
+        steps: [
+          {
+            title: "Display scan IDs, finding counts, and calculated scores",
+            text: "The dashboard calculates risk separately for SAST and pentest results. The SAST view shows the latest scan ID, timestamp, branch, 2,046 total vulnerabilities, severity counts, and a risk score of 100. The pentest view shows the latest pentest scan ID, timestamp, 6 total tests, fail/error, warning, and passed counts, and a risk score of 83.",
+            layout: "stacked",
+            imagesLayout: "vertical",
+            images: [
+              {
+                image: devsecopsRiskSastScore,
+                imageAlt:
+                  "Latest SAST scan dashboard showing scan ID, timestamp, branch, total vulnerabilities by severity, and risk score",
+              },
+              {
+                image: devsecopsRiskPentestScore,
+                imageAlt:
+                  "Latest pentest result dashboard showing scan ID, timestamp, total tests by outcome, and risk score",
+              },
+            ],
+          },
+          {
+            title: "Filter scanned risks and download reports",
+            text: "The findings tables expose the detailed risks behind each score. Pentest findings can be filtered by title, status, and severity, while SAST findings can be filtered by title and severity. Each row keeps the status or severity, test name or source, affected location, and recommendation visible, and the Download button lets users export the report for deeper review or remediation tracking.",
+            layout: "stacked",
+            imagesLayout: "stacked",
+            images: [
+              {
+                image: devsecopsRiskPentestFindingsTable,
+                imageAlt:
+                  "Pentest findings table with title, status, and severity filters plus a download button",
+              },
+              {
+                image: devsecopsRiskSastFindingsTable,
+                imageAlt:
+                  "SAST findings table with title and severity filters, source, location, recommendation, and a download button",
+              },
+            ],
+          },
+        ],
       },
       {
-        title: "Security Dashboard",
+        title: "Automated Setup and Deployment Scripts",
         description:
-          "The React dashboard displays scan history, vulnerabilities, controls, and risk posture. Axios is used to request backend data, and the UI organizes findings so teams can quickly identify what needs attention.",
-      },
-      {
-        title: "Cloud Infrastructure Deployment",
-        description:
-          "Terraform provisions the AWS infrastructure, including ECS Fargate services, the Application Load Balancer, S3 buckets, DynamoDB tables, Lambda integration, VPC networking, and IAM permissions.",
+          "The project includes README-guided shell scripts that help users configure AWS, Terraform, GitHub Actions, Docker images, target repositories, and deployment outputs without manually wiring every service.",
+        steps: [
+          {
+            title: "Prepare AWS secrets before Terraform",
+            text: "The setup-secrets.sh script securely prompts for SAST and pentest ingest tokens, stores them in AWS Secrets Manager as devsecops/sast and devsecops/pentest, and prints the next GitHub setup checklist. This gives Terraform and the pentest trigger a predictable secret source before infrastructure is applied.",
+            image: devsecopsScriptSetupSecrets,
+            imageAlt:
+              "README setup-secrets script instructions showing devsecops/sast and devsecops/pentest AWS Secrets Manager secret names",
+          },
+          {
+            title: "Configure target repositories",
+            text: "The setup-target-repo.sh script configures GitHub Actions secrets and variables for a target repository, including AWS credentials, ingest tokens, backend API URL, and report bucket name. With the protect-branch option, it also enables branch protection so failed SAST checks can block unsafe merges. The setup-target-workflow.sh script then creates or updates the target repository's .github/workflows/sast.yml file so a new repository can connect to the reusable SAST workflow without manual YAML setup.",
+            image: devsecopsScriptTargetRepo,
+            imageAlt:
+              "README target repository setup instructions showing setup-target-repo and setup-target-workflow commands, GitHub Actions secrets, variables, and branch protection",
+          },
+          {
+            title: "Deploy the full product from one command",
+            text: "The deploy_all.sh script runs Terraform, reads Terraform outputs, logs in to ECR, builds and pushes backend and pentest containers, redeploys ECS, syncs the frontend to S3, and prints the frontend URL plus demo target URL. Flags such as --auto-approve, --infra-only, --skip-backend, and --skip-frontend let users choose the right deployment path.",
+            layout: "stacked",
+            images: [
+              {
+                image: devsecopsScriptDeployCommands,
+                imageAlt:
+                  "README deploy application instructions showing deploy_all script command variants",
+              },
+              {
+                image: devsecopsScriptDeploySummary,
+                imageAlt:
+                  "README deploy_all script summary listing Terraform apply, Terraform outputs, ECR image pushes, ECS redeploy, pentest image build, and frontend S3 sync",
+                size: "compact",
+              },
+            ],
+          },
+          {
+            title: "Print deployed dashboard and demo target URLs",
+            text: "After deployment completes, the script prints the CloudFront frontend URL for the security dashboard and the demo target URL used for API pentest scans. This gives users the two links they need to open the product and immediately validate it against the deployed Juice Shop target.",
+            image: devsecopsScriptDeployOutputUrls,
+            layout: "stacked",
+            imageAlt:
+              "Terminal output showing deploy complete with frontend dashboard URL and demo target URL",
+          },
+        ],
       },
     ],
   },

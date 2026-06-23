@@ -394,6 +394,11 @@
   margin: 0;
 }
 
+.timeline-figure-compact {
+  justify-self: center;
+  width: min(100%, 500px);
+}
+
 .timeline-step img {
   display: block;
   width: 100%;
@@ -404,6 +409,10 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+}
+
+.timeline-figures-vertical {
+  grid-template-columns: 1fr;
 }
 
 .timeline-figures figure {
@@ -419,6 +428,10 @@
   width: 100%;
   height: 310px;
   object-fit: contain;
+}
+
+.timeline-figures .timeline-figure-compact img {
+  height: 210px;
 }
 
 .timeline-figures figcaption {
